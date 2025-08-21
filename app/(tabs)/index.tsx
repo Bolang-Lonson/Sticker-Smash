@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import { Image } from "expo-image";
+import ImageViewer from "@/components/ImageViewer";
 
 export default function Index() {
 
@@ -7,7 +7,7 @@ export default function Index() {
 	return (
 		<View style={styles.container}>
 			<View style={styles.imageContainer}>
-				<Image source={PlaceHolderImage} style={styles.image}/>
+				<ImageViewer imgSource={PlaceHolderImage}/>
 			</View>
 		</View>
 	);
@@ -18,18 +18,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: '#25292e',
 		alignItems: 'center',
-		justifyContent: 'center',
-		gap: 15
 	},
 	text: {
 		color: '#fff',
 	},
 	imageContainer: {
     	flex: 1,
-	},
-	image: {
-		width: 320,
-		height: 440,
-		borderRadius: 18,
 	},
 });
