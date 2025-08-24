@@ -1,5 +1,5 @@
-import { View, StyleSheet } from "react-native";
-import { ImageViewer, Button, CircularButton, IconButton, EmojiPicker } from "@/components";
+import { View, StyleSheet, ImageSourcePropType } from "react-native";
+import { ImageViewer, Button, CircularButton, IconButton, EmojiPicker, EmojiList } from "@/components";
 import * as ImagePicker from "expo-image-picker";
 import { StatusBar } from 'expo-status-bar';
 import { useState } from "react";
@@ -12,6 +12,7 @@ export default function Index() {
 	const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
 	const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
 	const [modalVisible, setModalVisible] = useState<boolean>(false);
+	const [pickedEmoji, setPickedEmoji] = useState<ImageSourcePropType | undefined>(undefined);
 
 	const pickImageAsync = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
@@ -27,6 +28,8 @@ export default function Index() {
 			alert('You did not select any image.');
 		}
 	}
+
+	const onModalClose = () => setModalVisible(false);
 
 	const onSaveImageAsync = async () => {
 		// setting the modal invisible
@@ -69,9 +72,9 @@ export default function Index() {
 			)}
 			<EmojiPicker 
 				isVisible={modalVisible}
-				onClose={() => setModalVisible(false)}	//	making modal invisible when close button is clicked
+				onClose={onModalClose}	//	making modal invisible when close button is clicked
 			>
-
+				<EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose}/>
 			</EmojiPicker>
 			<StatusBar style='light'/>
 		</View>

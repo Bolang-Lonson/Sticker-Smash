@@ -3,6 +3,7 @@ import Button from "./Button";
 import CircularButton from "./CircularButton";
 import IconButton from "./IconButton";
 import EmojiPicker from "./EmojiPicker";
+import EmojiList from "./EmojiList";
 
 export { 
     ImageViewer,
@@ -10,4 +11,5 @@ export {
     CircularButton,
     IconButton,
     EmojiPicker,
+    EmojiList,
 };
