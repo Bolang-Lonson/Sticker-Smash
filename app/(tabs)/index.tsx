@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import { ImageViewer, Button, CircularButton, IconButton } from "@/components";
+import { ImageViewer, Button, CircularButton, IconButton, EmojiPicker } from "@/components";
 import * as ImagePicker from "expo-image-picker";
 import { StatusBar } from 'expo-status-bar';
 import { useState } from "react";
@@ -11,6 +11,7 @@ export default function Index() {
 
 	const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
 	const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
+	const [modalVisible, setModalVisible] = useState<boolean>(false);
 
 	const pickImageAsync = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
@@ -27,37 +28,51 @@ export default function Index() {
 		}
 	}
 
-	/** Invokes when the user presses the reset button, causing the image picker button to appear again.*/
-	const onReset = () => setShowAppOptions(false);
-
-	const onAddSticker = () => {
-		// we will implement this later
-	};
-
 	const onSaveImageAsync = async () => {
-		// we will implement this later
+		// setting the modal invisible
 	};
 	return (
 		<View style={styles.container}>
 			<View style={styles.imageContainer}>
-				<ImageViewer imgSource={PlaceHolderImage} selectedImage={selectedImage}/>
+				<ImageViewer
+					imgSource={PlaceHolderImage}
+					selectedImage={selectedImage}
+				/>
 			</View>
 			{showAppOptions? (
-				<View style={styles.container}>
-					<View style={styles.optionsRow}>
-						<IconButton icon="refresh" label="Reset" onPress={onReset}/>
-						<CircularButton onPress={onAddSticker}/>
-						<IconButton icon="save-alt" label="Save" onPress={onSaveImageAsync}/>
-					</View>
+			<View style={styles.optionsContainer}>
+				<View style={styles.optionsRow}>
+					<IconButton
+						icon="refresh" label="Reset" 
+						onPress={() => setShowAppOptions(false)}	// Causing the image picker button to appear again
+					/>
+					<CircularButton 
+						onPress={() => setModalVisible(true)} // making modal visible
+					/>
+					<IconButton
+						icon="save-alt" label="Save" 
+						onPress={onSaveImageAsync}
+					/>
 				</View>
-				): (
-				<View style={styles.footerContainer}>
-					<Button label='Choose a photo' theme="primary" onPress={pickImageAsync}/>
-					<Button label='Use this photo' onPress={() => setShowAppOptions(true)}/>
-				</View>
-				)
-			}
-			
+			</View>
+			): (
+			<View style={styles.footerContainer}>
+				<Button 
+					label='Choose a photo' theme="primary" 
+					onPress={pickImageAsync}
+				/>
+				<Button 
+					label='Use this photo' 
+					onPress={() => setShowAppOptions(true)}
+				/>
+			</View>
+			)}
+			<EmojiPicker 
+				isVisible={modalVisible}
+				onClose={() => setModalVisible(false)}	//	making modal invisible when close button is clicked
+			>
+
+			</EmojiPicker>
 			<StatusBar style='light'/>
 		</View>
 	);
@@ -71,7 +86,7 @@ const styles = StyleSheet.create({
 	},
 	imageContainer: {
     	flex: 1,
-		paddingTop: 28
+		paddingTop: 28,
 	},
 	footerContainer: {
 		flex: 1 / 3,

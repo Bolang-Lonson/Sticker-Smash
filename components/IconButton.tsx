@@ -17,7 +17,7 @@ export default function IconButton({ icon, label, onPress }: Props) {
             size={24} 
             color='#fff'
         />
-        <Text>{label}</Text>
+        <Text style={styles.iconButtonLabel}>{label}</Text>
     </Pressable>
   )
 }
