@@ -1,5 +1,5 @@
 import { View, StyleSheet, ImageSourcePropType } from "react-native";
-import { ImageViewer, Button, CircularButton, IconButton, EmojiPicker, EmojiList } from "@/components";
+import { ImageViewer, Button, CircularButton, IconButton, EmojiPicker, EmojiList, EmojiSticker } from "@/components";
 import * as ImagePicker from "expo-image-picker";
 import { StatusBar } from 'expo-status-bar';
 import { useState } from "react";
@@ -41,6 +41,11 @@ export default function Index() {
 					imgSource={PlaceHolderImage}
 					selectedImage={selectedImage}
 				/>
+				{pickedEmoji &&
+				<EmojiSticker
+					imageSize={40}
+					stickerSource={pickedEmoji}
+				/>}
 			</View>
 			{showAppOptions? (
 			<View style={styles.optionsContainer}>
