@@ -21,7 +21,10 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "orientation": "portrait",
+      "display": "standalone",
+      "shortName": "Sticker Smash"
     },
     "plugins": [
       "expo-router",

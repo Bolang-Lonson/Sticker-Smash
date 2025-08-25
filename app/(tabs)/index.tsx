@@ -3,6 +3,7 @@ import { ImageViewer, Button, CircularButton, IconButton, EmojiPicker, EmojiList
 import * as ImagePicker from "expo-image-picker";
 import { StatusBar } from 'expo-status-bar';
 import { useState } from "react";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 
 const PlaceHolderImage = require("@/assets/images/background-image.png");
@@ -35,7 +36,7 @@ export default function Index() {
 		// setting the modal invisible
 	};
 	return (
-		<View style={styles.container}>
+		<GestureHandlerRootView style={styles.container}>
 			<View style={styles.imageContainer}>
 				<ImageViewer
 					imgSource={PlaceHolderImage}
@@ -82,7 +83,7 @@ export default function Index() {
 				<EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose}/>
 			</EmojiPicker>
 			<StatusBar style='light'/>
-		</View>
+		</GestureHandlerRootView>
 	);
 }
 
