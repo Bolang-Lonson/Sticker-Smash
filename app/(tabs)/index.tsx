@@ -1,4 +1,4 @@
-import { View, StyleSheet, ImageSourcePropType } from "react-native";
+import { View, StyleSheet, ImageSourcePropType, Platform } from "react-native";
 import { ImageViewer, Button, CircularButton, IconButton, EmojiPicker, EmojiList, EmojiSticker } from "@/components";
 import * as ImagePicker from "expo-image-picker";
 import { StatusBar } from 'expo-status-bar';
@@ -6,11 +6,12 @@ import { useState, useRef } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as MediaLibrary from "expo-media-library";
 import { captureRef } from "react-native-view-shot";
+import domtoimage from "dom-to-image";
 
 const PlaceHolderImage = require("@/assets/images/background-image.png");
 
 export default function Index() {
-
+	// Hooks
 	const [selectedImage, setSelectedImage] = useState<string | undefined>(undefined);
 	const [showAppOptions, setShowAppOptions] = useState<boolean>(false);
 	const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -37,17 +38,34 @@ export default function Index() {
 	const onModalClose = () => setModalVisible(false);
 
 	const onSaveImageAsync = async () => {
-		try {
-			const localUri = await captureRef(imageRef, {
-				height: 440,
-				quality: 1
-			});
+		if (Platform.OS !== 'web') {
+			try {
+				const localUri = await captureRef(imageRef, {
+					height: 440,
+					quality: 1
+				});
 
-			await MediaLibrary.saveToLibraryAsync(localUri);
+				await MediaLibrary.saveToLibraryAsync(localUri);
 
-			if (localUri) alert('Saved!');
-		} catch (e) {
-			console.log(e);
+				if (localUri) alert('Saved!');
+			} catch (e) {
+				console.log(e);
+			}
+		} else {
+			try {
+				const dataUrl = await domtoimage.toJpeg(imageRef.current, {
+					quality: 1,
+					width: 320,
+					height: 440,
+				});
+
+				let link = document.createElement('a');
+				link.download = 'sticker-smash.jpeg';
+				link.href = dataUrl;
+				link.click();
+			} catch (e) {
+				console.log(e);
+			}
 		}
 	};
 
