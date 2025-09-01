@@ -1,7 +1,6 @@
 import { View, StyleSheet, ImageSourcePropType, Platform } from "react-native";
 import { ImageViewer, Button, CircularButton, IconButton, EmojiPicker, EmojiList, EmojiSticker } from "@/components";
 import * as ImagePicker from "expo-image-picker";
-import { StatusBar } from 'expo-status-bar';
 import { useState, useRef } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as MediaLibrary from "expo-media-library";
@@ -53,6 +52,7 @@ export default function Index() {
 			}
 		} else {
 			try {
+				// capturing svg to jpeg screenshot of DOM image element using domtoimage
 				const dataUrl = await domtoimage.toJpeg(imageRef.current, {
 					quality: 1,
 					width: 320,
@@ -120,7 +120,6 @@ export default function Index() {
 			>
 				<EmojiList onSelect={setPickedEmoji} onCloseModal={onModalClose}/>
 			</EmojiPicker>
-			<StatusBar style='light'/>
 		</GestureHandlerRootView>
 	);
 }
